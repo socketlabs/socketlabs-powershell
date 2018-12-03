@@ -64,6 +64,37 @@ or a `web.config` file, or using Environment Variables. For more information ple
 * [Using web.config](https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/best-practices-for-deploying-passwords-and-other-sensitive-data-to-aspnet-and-azure)
 * [Using Environment Variables](https://docs.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable)
 
+## Usage
+
+We recommend storing your API Key and ServerId as environment variables.
+
+```powershell
+PS C:\> $target = [System.EnvironmentVariableTarget]::User
+PS C:\> $apiKey = "XXXXX123456ABCDE"
+PS C:\> $serverId = "1000"
+PS C:\> [System.Environment]::SetEnvironmentVariable("SL_API_KEY", $apiKey, $target)
+PS C:\> [System.Environment]::SetEnvironmentVariable("SL_SERVERID", $serverId, $target)
+```
+
+### Examples
+
+#### Output a list of processess to an email recipient.
+```powershell
+
+PS C:\> Get-Process | Out-SocketLabs -Sender "sysadm@example.com" -Recipients "infra@example.com", "logs@example.com" -Subject "Here is the list of running processes."
+```
+
+#### Get IP Address information from the current host
+```powershell
+PS C:\> $request = Invoke-WebRequest -Uri "https://ifconfig.co/json" -UseBasicParsing
+PS C:\> $request.Content | ConvertFrom-Json | Format-Table ip, country*, hostname | 
+>> Out-SocketLabs -Sender "sysadm@example.com" `
+>> -Recipients "infra@example.com", "logs@example.com" `
+>> -Subject "Here is the list of running processes."
+```
+
+
+
 # License
-The SocketLabs.EmailDelivery library and all associated code, including any code 
+The SocketLabs InjectionApi PowerShell module and all associated code, including any code 
 samples, are [MIT Licensed](https://github.com/socketlabs/socketlabs-csharp/blob/master/LICENSE.MD).
