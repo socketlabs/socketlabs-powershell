@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InjectionApi", "src\SocketLabs\InjectionApi\InjectionApi.csproj", "{2263F230-418C-4F3A-B0C6-0126B2B24ED3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2263F230-418C-4F3A-B0C6-0126B2B24ED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2263F230-418C-4F3A-B0C6-0126B2B24ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2263F230-418C-4F3A-B0C6-0126B2B24ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2263F230-418C-4F3A-B0C6-0126B2B24ED3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C0F63FA8-2993-41C2-BF1D-AB5141C47ECE}
+	EndGlobalSection
+EndGlobal
