@@ -43,6 +43,9 @@ namespace InjectionApi.PowerShell.Commands
         [Parameter(Position = 4, ParameterSetName = "ApiKey")]
         public int ServerId { get; set; }
 
+        [Parameter(Position = 4, ParameterSetName = "Configuration")]
+        public bool PassThru { get; set; }
+
         private readonly Collection<PSObject> _psObjects;
         private string _body;
 
@@ -75,18 +78,24 @@ namespace InjectionApi.PowerShell.Commands
 
         protected override void EndProcessing()
         {
-            ProcessObjects(_psObjects);
-            var response = InjectMessage();
+            if (ShouldProcess(nameof(EndProcessing)))
+            {
+                ProcessObjects(_psObjects);
+                var response = InjectMessage();
 
-            if (response.Result != SendResult.Success)
-                throw new Exception($"Error sending message: {response.ResponseMessage}");
+                if (response.Result != SendResult.Success)
+                    throw new Exception($"Error sending message: {response.ResponseMessage}");
 
-            base.EndProcessing();
+                base.EndProcessing();
+            }
         }
 
         protected override void ProcessRecord()
         {
-            _psObjects.Add(this.InputObject);
+            if (ShouldProcess(nameof(ProcessRecord)))
+            {
+                _psObjects.Add(this.InputObject);
+            }
         }
 
         public void ProcessObjects(object obj)
