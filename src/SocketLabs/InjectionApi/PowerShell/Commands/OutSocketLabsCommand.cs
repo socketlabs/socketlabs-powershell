@@ -17,33 +17,33 @@ namespace InjectionApi.PowerShell.Commands
     /// <summary>
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
-    [Cmdlet(VerbsData.Out, "SocketLabs", SupportsShouldProcess = true, DefaultParameterSetName = "Addresses", HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md")]
+    [Cmdlet(VerbsData.Out, "SocketLabs", SupportsShouldProcess = true, DefaultParameterSetName = "Default", HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md")]
     public class OutSocketLabsCommand : SocketLabsCommandBase
     {
         /// <summary>
         /// The sender email addresses to send the command output from.
         /// </summary>
         [Alias("From")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Addresses")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public string Sender { get; set; }
 
         /// <summary>
         /// The recipient email addresses to receive the command output.
         /// </summary>
         [Alias("To")]
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "Addresses")]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "Default")]
         public string[] Recipients { get; set; }
 
-        [Parameter(Mandatory = true, Position = 2, ParameterSetName = "Addresses")]
+        [Parameter(Mandatory = true, Position = 2, ParameterSetName = "Default")]
         public string Subject { get; set; }
 
-        [Parameter(Position = 3, ParameterSetName = "ApiKey")]
+        [Parameter(Position = 3, ParameterSetName = "Default")]
         public string InjectionApiKey { get; set; }
 
-        [Parameter(Position = 4, ParameterSetName = "ApiKey")]
+        [Parameter(Position = 4, ParameterSetName = "Default")]
         public int ServerId { get; set; }
 
-        [Parameter(Position = 5, ParameterSetName = "Configuration")]
+        [Parameter(Position = 5, ParameterSetName = "Default")]
         public SwitchParameter PassThru { get; set; }
 
         private readonly Collection<PSObject> _psObjects;
