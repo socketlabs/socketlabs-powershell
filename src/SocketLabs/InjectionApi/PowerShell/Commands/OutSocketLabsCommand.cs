@@ -43,8 +43,8 @@ namespace InjectionApi.PowerShell.Commands
         [Parameter(Position = 4, ParameterSetName = "ApiKey")]
         public int ServerId { get; set; }
 
-        [Parameter(Position = 4, ParameterSetName = "Configuration")]
-        public bool PassThru { get; set; }
+        [Parameter(Position = 5, ParameterSetName = "Configuration")]
+        public SwitchParameter PassThru { get; set; }
 
         private readonly Collection<PSObject> _psObjects;
         private string _body;
@@ -94,6 +94,10 @@ namespace InjectionApi.PowerShell.Commands
         {
             if (ShouldProcess(nameof(ProcessRecord)))
             {
+                // Pass the object through the pipeline.
+                if (PassThru)
+                    this.WriteObject(this.InputObject);
+
                 _psObjects.Add(this.InputObject);
             }
         }
