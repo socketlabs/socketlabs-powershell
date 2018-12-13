@@ -113,19 +113,21 @@ namespace InjectionApi.PowerShell.Commands
         public SendResponse InjectMessage()
         {
             var html = MessageTemplate.BuildHtmlMessage(_body);
-            var client = new SocketLabsClient(this.ServerId, this.InjectionApiKey);
-            var message = new BasicMessage();
-            message.Subject = this.Subject;
-            message.HtmlBody = html;
-            message.PlainTextBody = _body;
-            message.From.Email = this.Sender;
-
-            foreach (var recipient in this.Recipients)
+            using (var client = new SocketLabsClient(this.ServerId, this.InjectionApiKey))
             {
-                message.To.Add(recipient);
-            }
+                var message = new BasicMessage();
+                message.Subject = this.Subject;
+                message.HtmlBody = html;
+                message.PlainTextBody = _body;
+                message.From.Email = this.Sender;
 
-            return client.Send(message);
+                foreach (var recipient in this.Recipients)
+                {
+                    message.To.Add(recipient);
+                }
+
+                return client.Send(message);
+            }
         }
     }
 }
