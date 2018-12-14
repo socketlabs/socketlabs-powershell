@@ -1,16 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Management.Automation;
-using System.Management.Automation.Internal;
-using System.Management.Automation.Host;
-using System.IO;
-using Microsoft.PowerShell.Commands.Internal.Format;
-using System.Management.Automation.Runspaces;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using InjectionApi.Utilities;
 using SocketLabs.InjectionApi;
 using SocketLabs.InjectionApi.Message;
-using InjectionApi.Utilities;
+using System;
+using System.Collections.ObjectModel;
+using System.Management.Automation;
 
 namespace InjectionApi.PowerShell.Commands
 {
