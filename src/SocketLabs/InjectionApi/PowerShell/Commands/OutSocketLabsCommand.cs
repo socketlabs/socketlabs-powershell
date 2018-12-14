@@ -17,31 +17,34 @@ namespace InjectionApi.PowerShell.Commands
     /// <summary>
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
-    [Cmdlet(VerbsData.Out, "SocketLabs", SupportsShouldProcess = true, DefaultParameterSetName = "Addresses", HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md")]
+    [Cmdlet(VerbsData.Out, "SocketLabs", SupportsShouldProcess = true, DefaultParameterSetName = "Default", HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md")]
     public class OutSocketLabsCommand : SocketLabsCommandBase
     {
         /// <summary>
         /// The sender email addresses to send the command output from.
         /// </summary>
         [Alias("From")]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Addresses")]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public string Sender { get; set; }
 
         /// <summary>
         /// The recipient email addresses to receive the command output.
         /// </summary>
         [Alias("To")]
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "Addresses")]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "Default")]
         public string[] Recipients { get; set; }
 
-        [Parameter(Mandatory = true, Position = 2, ParameterSetName = "Addresses")]
+        [Parameter(Mandatory = true, Position = 2, ParameterSetName = "Default")]
         public string Subject { get; set; }
 
-        [Parameter(Position = 3, ParameterSetName = "ApiKey")]
+        [Parameter(Position = 3, ParameterSetName = "Default")]
         public string InjectionApiKey { get; set; }
 
-        [Parameter(Position = 4, ParameterSetName = "ApiKey")]
+        [Parameter(Position = 4, ParameterSetName = "Default")]
         public int ServerId { get; set; }
+
+        [Parameter(Position = 5, ParameterSetName = "Default")]
+        public SwitchParameter PassThru { get; set; }
 
         private readonly Collection<PSObject> _psObjects;
         private string _body;
@@ -75,18 +78,28 @@ namespace InjectionApi.PowerShell.Commands
 
         protected override void EndProcessing()
         {
-            ProcessObjects(_psObjects);
-            var response = InjectMessage();
+            if (ShouldProcess(nameof(EndProcessing)))
+            {
+                ProcessObjects(_psObjects);
+                var response = InjectMessage();
 
-            if (response.Result != SendResult.Success)
-                throw new Exception($"Error sending message: {response.ResponseMessage}");
+                if (response.Result != SendResult.Success)
+                    throw new Exception($"Error sending message: {response.ResponseMessage}");
 
-            base.EndProcessing();
+                base.EndProcessing();
+            }
         }
 
         protected override void ProcessRecord()
         {
-            _psObjects.Add(this.InputObject);
+            if (ShouldProcess(nameof(ProcessRecord)))
+            {
+                // Pass the object through the pipeline.
+                if (PassThru)
+                    this.WriteObject(this.InputObject);
+
+                _psObjects.Add(this.InputObject);
+            }
         }
 
         public void ProcessObjects(object obj)
@@ -104,19 +117,21 @@ namespace InjectionApi.PowerShell.Commands
         public SendResponse InjectMessage()
         {
             var html = MessageTemplate.BuildHtmlMessage(_body);
-            var client = new SocketLabsClient(this.ServerId, this.InjectionApiKey);
-            var message = new BasicMessage();
-            message.Subject = this.Subject;
-            message.HtmlBody = html;
-            message.PlainTextBody = _body;
-            message.From.Email = this.Sender;
-
-            foreach (var recipient in this.Recipients)
+            using (var client = new SocketLabsClient(this.ServerId, this.InjectionApiKey))
             {
-                message.To.Add(recipient);
-            }
+                var message = new BasicMessage();
+                message.Subject = this.Subject;
+                message.HtmlBody = html;
+                message.PlainTextBody = _body;
+                message.From.Email = this.Sender;
 
-            return client.Send(message);
+                foreach (var recipient in this.Recipients)
+                {
+                    message.To.Add(recipient);
+                }
+
+                return client.Send(message);
+            }
         }
     }
 }
