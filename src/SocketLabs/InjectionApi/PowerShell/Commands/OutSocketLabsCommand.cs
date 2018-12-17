@@ -1,16 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Management.Automation;
-using System.Management.Automation.Internal;
-using System.Management.Automation.Host;
-using System.IO;
-using Microsoft.PowerShell.Commands.Internal.Format;
-using System.Management.Automation.Runspaces;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using InjectionApi.Utilities;
 using SocketLabs.InjectionApi;
 using SocketLabs.InjectionApi.Message;
-using InjectionApi.Utilities;
+using System;
+using System.Collections.ObjectModel;
+using System.Management.Automation;
 
 namespace InjectionApi.PowerShell.Commands
 {
@@ -106,9 +99,13 @@ namespace InjectionApi.PowerShell.Commands
         {
             using (var ps = System.Management.Automation.PowerShell.Create())
             {
-                ps.AddCommand("Out-String");
+                ps.AddCommand("Format-Table");
                 ps.AddParameter("InputObject", obj);
                 var result = ps.Invoke();
+
+                ps.AddCommand("Out-String");
+                ps.AddParameter("InputObject", result);
+                result = ps.Invoke();
 
                 _body = result?[0].BaseObject as string;
             }

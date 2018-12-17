@@ -73,7 +73,7 @@ PS C:\> $target = [System.EnvironmentVariableTarget]::User
 PS C:\> $apiKey = "XXXXX123456ABCDE"
 PS C:\> $serverId = "1000"
 PS C:\> [System.Environment]::SetEnvironmentVariable("SL_API_KEY", $apiKey, $target)
-PS C:\> [System.Environment]::SetEnvironmentVariable("SL_SERVERID", $serverId, $target)
+PS C:\> [System.Environment]::SetEnvironmentVariable("SL_SERVER_ID", $serverId, $target)
 ```
 
 ### Examples
