@@ -8,7 +8,7 @@ schema: 2.0.0
 # Out-SocketLabs
 
 ## SYNOPSIS
-The SocketLabs PowerShell module lets you send messages through our platform using our email injection API.
+The SocketLabs Out-SocketLabs cmdlet lets you send messages through our platform using our email injection API.
 
 ## SYNTAX
 
