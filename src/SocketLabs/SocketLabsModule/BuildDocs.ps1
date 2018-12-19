@@ -1,5 +1,5 @@
 ﻿$platyPSInstalled = Get-Module -ListAvailable -Name platyPS;
-$modulePath = ".\bin\Debug\net451\InjectionApi.dll"
+$modulePath = ".\bin\Debug\net451\SocketLabs.psd1"
 $buildCompleted = Test-Path $modulePath;
 
 if (!$buildCompleted) {

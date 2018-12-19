@@ -2,16 +2,20 @@
 
   <PropertyGroup>
     <TargetFrameworks>net451;netstandard2.0</TargetFrameworks>
+    <AssemblyName>SocketLabs</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SocketLabs.EmailDelivery" Version="1.0.0.3" />
+    <ProjectReference Include="..\InjectionApi\InjectionApi.csproj" />
     <PackageReference Include="System.Management.Automation" Version="6.1.1" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
     <PackageReference Include="System.Management.Automation.dll" Version="10.0.10586" Condition="'$(TargetFramework)' == 'net451'" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="InjectionApi.psd1">
+    <None Update="en-US\InjectionApi.dll-Help.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SocketLabs.psd1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
