@@ -1,5 +1,5 @@
 ﻿$platyPSInstalled = Get-Module -ListAvailable -Name platyPS;
-$modulePath = ".\bin\Debug\net451\InjectionApi.dll"
+$modulePath = ".\src\SocketLabs\SocketLabsModule\bin\Debug\net451\SocketLabs.psd1"
 $buildCompleted = Test-Path $modulePath;
 
 if (!$buildCompleted) {
@@ -16,7 +16,7 @@ Import-Module platyPS;
 Import-Module $modulePath;
 
 Write-Host "Updating markdown docs..."
-Update-MarkdownHelp .\Docs\;
+Update-MarkdownHelp .\docs\;
 
 Write-Host "Updating help info .xml..."
-New-ExternalHelp .\Docs -OutputPath en-US\ -Force;
+New-ExternalHelp .\docs -OutputPath .\src\SocketLabs\SocketLabsModule\en-US\ -Force;

@@ -6,7 +6,7 @@
       <command:verb>Out</command:verb>
       <command:noun>SocketLabs</command:noun>
       <maml:description>
-        <maml:para>The SocketLabs PowerShell module lets you send messages through our platform using our email injection API.</maml:para>
+        <maml:para>The SocketLabs Out-SocketLabs cmdlet lets you send messages through our platform using our email injection API.</maml:para>
       </maml:description>
     </command:details>
     <maml:description>

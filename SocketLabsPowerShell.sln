@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InjectionApi", "src\SocketLabs\InjectionApi\InjectionApi.csproj", "{2263F230-418C-4F3A-B0C6-0126B2B24ED3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InjectionApi", "src\SocketLabs\InjectionApi\InjectionApi.csproj", "{2263F230-418C-4F3A-B0C6-0126B2B24ED3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketLabsModule", "src\SocketLabs\SocketLabsModule\SocketLabsModule.csproj", "{4F5759A2-8549-4A34-B6E0-60114B433386}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SubModules", "SubModules", "{672237E7-BA57-4D30-A96A-304C3DD96F4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{2263F230-418C-4F3A-B0C6-0126B2B24ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2263F230-418C-4F3A-B0C6-0126B2B24ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2263F230-418C-4F3A-B0C6-0126B2B24ED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F5759A2-8549-4A34-B6E0-60114B433386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F5759A2-8549-4A34-B6E0-60114B433386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F5759A2-8549-4A34-B6E0-60114B433386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F5759A2-8549-4A34-B6E0-60114B433386}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2263F230-418C-4F3A-B0C6-0126B2B24ED3} = {672237E7-BA57-4D30-A96A-304C3DD96F4A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C0F63FA8-2993-41C2-BF1D-AB5141C47ECE}
