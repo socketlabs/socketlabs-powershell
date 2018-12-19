@@ -38,7 +38,14 @@ Alternately, you can simply [clone this repository](https://github.com/socketlab
 directly to include the source code in your project.
 
 # Getting Started
-## Obtaining your API Key and SocketLabs ServerId number
+
+Currently we only support the Injection API.  This let's you send messages via 
+HTTP injection using PowerShell
+
+## Injection API
+* [Out-SocketLabs](/src/SocketLabs/InjectionApi/Docs/Out-SocketLabs.md)
+
+### Obtaining your API Key and SocketLabs ServerId number
 In order to get started, you'll need to enable the Injection API feature in the 
 [SocketLabs Control Panel](https://cp.socketlabs.com). Once logged in, navigate 
 to your SocketLabs server's dashboard (if you only have one server on your account
@@ -54,7 +61,7 @@ need (along with your ServerId) to start using the API. Be sure to click the
 "Update" button to save your changes once you are finished.
 
 
-## Managing API Keys
+### Managing API Keys
 For ease of demonstration, many of our examples include the ServerId and API 
 key directly in our code sample. Generally it is not considered a good practice 
 to store sensitive information like this directly in your code. 
@@ -70,24 +77,18 @@ PS C:\> [System.Environment]::SetEnvironmentVariable("SL_API_KEY", $apiKey, $tar
 PS C:\> [System.Environment]::SetEnvironmentVariable("SL_SERVER_ID", $serverId, $target)
 ```
 
-## Platform Support
 
-Currently we only support the Injection API.  This let's you send messages via 
-HTTP injection using PowerShell
+### Usage
+#### Examples
 
-### Injection API
-* [Out-SocketLabs](/src/SocketLabs/InjectionApi/Docs/Out-SocketLabs.md)
+Output a list of processess to an email recipient.
 
-## Usage
-### Examples
-
-#### Output a list of processess to an email recipient.
 ```powershell
-
 PS C:\> Get-Process | Out-SocketLabs -Sender "sysadm@example.com" -Recipients "infra@example.com", "logs@example.com" -Subject "Here is the list of running processes."
 ```
 
-#### Get IP Address information from the current host
+Get IP Address information from the current host
+
 ```powershell
 PS C:\> $request = Invoke-WebRequest -Uri "https://ifconfig.co/json" -UseBasicParsing
 PS C:\> $request.Content | ConvertFrom-Json | Format-Table ip, country*, hostname | 
