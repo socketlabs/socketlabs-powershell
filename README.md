@@ -17,9 +17,8 @@ The SocketLabs PowerShell module allows you to interact with our platform API us
 # Prerequisites and Installation
 ## Prerequisites
 * A supported .NET version
-  * PowerShell 3.0 or PowerShell Core 6.1.0 or higher. 
-  * .NET version 4.5 or higher
-  * .NET Core 2.0 or higher
+  * PowerShell 5.1 or PowerShell Core 6.1.0 or higher. 
+  * .NET version 4.6.1 or higher
   * .NET Standard 2.0 or higher
 * A SocketLabs account. If you don't have one yet, you can 
 [sign up for a free account](https://signup.socketlabs.com/step-1?plan=free) 
