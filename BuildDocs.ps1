@@ -1,5 +1,5 @@
 ﻿$platyPSInstalled = Get-Module -ListAvailable -Name platyPS;
-$modulePath = ".\src\SocketLabs\SocketLabsModule\bin\Debug\net451\SocketLabs.psd1"
+$modulePath = ".\src\SocketLabs\SocketLabsModule\bin\Release\netstandard2.0\SocketLabs.psd1"
 $buildCompleted = Test-Path $modulePath;
 
 if (!$buildCompleted) {

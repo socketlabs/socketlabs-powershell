@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyName>SocketLabs.PowerShell.Module</AssemblyName>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,9 +19,9 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="PowerShellStandard.Library">
-      <Version>5.1.0</Version>
+  <ItemGroup>
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0">
+      <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
 
