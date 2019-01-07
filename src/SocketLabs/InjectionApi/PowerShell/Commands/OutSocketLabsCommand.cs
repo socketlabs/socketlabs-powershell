@@ -99,13 +99,9 @@ namespace InjectionApi.PowerShell.Commands
         {
             using (var ps = System.Management.Automation.PowerShell.Create())
             {
-                ps.AddCommand("Format-Table");
+                ps.AddCommand("Out-String");
                 ps.AddParameter("InputObject", obj);
                 var result = ps.Invoke();
-
-                ps.AddCommand("Out-String");
-                ps.AddParameter("InputObject", result);
-                result = ps.Invoke();
 
                 _body = result?[0].BaseObject as string;
             }
