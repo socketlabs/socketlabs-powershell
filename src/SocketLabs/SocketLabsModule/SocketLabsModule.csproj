@@ -4,6 +4,17 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyName>SocketLabs.PowerShell.Module</AssemblyName>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AssemblyVersion>1.0.1.2</AssemblyVersion>
+    <FileVersion>1.0.1.2</FileVersion>
+    <Description>The SocketLabs PowerShell module lets you interact with our APIs.</Description>
+    <Version>1.0.1.2</Version>
+    <Authors>Matt Soler</Authors>
+    <Company>SocketLabs</Company>
+    <Copyright>©2019 SocketLabs Acquisition, LLC</Copyright>
+    <PackageLicenseUrl>https://github.com/socketlabs/socketlabs-powershell/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/socketlabs/socketlabs-powershell</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/socketlabs/socketlabs-powershell</RepositoryUrl>
+    <PackageTags>socketlabs, injection, api, powershell, module</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="en-US\InjectionApi.dll-Help.xml">
+    <None Update="en-US\SocketLabs.PowerShell.InjectionApi.dll-Help.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="SocketLabs.psd1">
