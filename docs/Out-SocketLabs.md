@@ -1,5 +1,5 @@
 ---
-external help file: InjectionApi.dll-Help.xml
+external help file: SocketLabs.PowerShell.InjectionApi.dll-Help.xml
 Module Name: SocketLabs
 online version: https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md
 schema: 2.0.0

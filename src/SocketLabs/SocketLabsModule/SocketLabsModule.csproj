@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="en-US\InjectionApi.dll-Help.xml">
+    <None Update="en-US\SocketLabs.PowerShell.InjectionApi.dll-Help.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="SocketLabs.psd1">
