@@ -4,10 +4,10 @@
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <AssemblyName>SocketLabs.PowerShell.InjectionApi</AssemblyName>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <AssemblyVersion>1.0.1.2</AssemblyVersion>
-    <FileVersion>1.0.1.2</FileVersion>
+    <AssemblyVersion>1.0.1.3</AssemblyVersion>
+    <FileVersion>1.0.1.3</FileVersion>
     <Description>The SocketLabs PowerShell module lets you interact with our APIs.</Description>
-    <Version>1.0.1.2</Version>
+    <Version>1.0.1.3</Version>
     <Authors>Matt Soler</Authors>
     <Company>SocketLabs</Company>
     <Copyright>©2019 SocketLabs Acquisition, LLC</Copyright>
