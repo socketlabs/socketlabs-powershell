@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketLabsModule", "src\Soc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SubModules", "SubModules", "{672237E7-BA57-4D30-A96A-304C3DD96F4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketLabsModule.Tests", "src\SocketLabs\Tests\SocketLabsModule.Tests\SocketLabsModule.Tests.csproj", "{E79EBB7F-2408-42AA-B4E0-400B7F5799E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{4F5759A2-8549-4A34-B6E0-60114B433386}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F5759A2-8549-4A34-B6E0-60114B433386}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F5759A2-8549-4A34-B6E0-60114B433386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E79EBB7F-2408-42AA-B4E0-400B7F5799E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E79EBB7F-2408-42AA-B4E0-400B7F5799E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E79EBB7F-2408-42AA-B4E0-400B7F5799E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E79EBB7F-2408-42AA-B4E0-400B7F5799E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

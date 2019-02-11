@@ -11,7 +11,7 @@ namespace InjectionApi.PowerShell.Commands
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
     [Cmdlet(VerbsData.Out, "SocketLabs", SupportsShouldProcess = true, DefaultParameterSetName = "Default", HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md")]
-    public class OutSocketLabsCommand : SocketLabsCommandBase
+    public class OutSocketLabsCommand : SocketLabsCommandBase, IDisposable
     {
         /// <summary>
         /// The sender email addresses to send the command output from.
@@ -41,10 +41,16 @@ namespace InjectionApi.PowerShell.Commands
 
         private readonly Collection<PSObject> _psObjects;
         private string _body;
+        private ISocketLabsClient _socketLabsClient;
 
         public OutSocketLabsCommand()
         {
             _psObjects = new Collection<PSObject>();
+        }
+
+        internal OutSocketLabsCommand(ISocketLabsClient socketLabsClient)
+        {
+            _socketLabsClient = socketLabsClient;
         }
 
         protected override void BeginProcessing()
@@ -110,21 +116,35 @@ namespace InjectionApi.PowerShell.Commands
         public SendResponse InjectMessage()
         {
             var html = MessageTemplate.BuildHtmlMessage(_body);
-            using (var client = new SocketLabsClient(this.ServerId, this.InjectionApiKey))
+
+            if (_socketLabsClient == null)
             {
-                var message = new BasicMessage();
-                message.Subject = this.Subject;
-                message.HtmlBody = html;
-                message.PlainTextBody = _body;
-                message.From.Email = this.Sender;
+                _socketLabsClient = new SocketLabsClient(this.ServerId, this.InjectionApiKey);
+            }
 
-                foreach (var recipient in this.Recipients)
-                {
-                    message.To.Add(recipient);
-                }
+            var message = new BasicMessage();
+            message.Subject = this.Subject;
+            message.HtmlBody = html;
+            message.PlainTextBody = _body;
+            message.From.Email = this.Sender;
 
-                return client.Send(message);
+            foreach (var recipient in this.Recipients)
+            {
+                message.To.Add(recipient);
+            }
+
+            return _socketLabsClient.Send(message);
+        }
+
+        #region IDisposable Support
+
+        public void Dispose()
+        {
+            if (_socketLabsClient is SocketLabsClient)
+            {
+                (_socketLabsClient as SocketLabsClient).Dispose();
             }
         }
+        #endregion
     }
 }
