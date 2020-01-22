@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <AssemblyName>SocketLabs.PowerShell.InjectionApi</AssemblyName>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AssemblyVersion>1.0.1.3</AssemblyVersion>
@@ -31,6 +31,10 @@
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\SocketLabsModule.Common\SocketLabsModule.Common.csproj" />
   </ItemGroup>
   
 </Project>
