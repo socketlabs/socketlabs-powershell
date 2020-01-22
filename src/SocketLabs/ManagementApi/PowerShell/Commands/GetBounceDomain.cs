@@ -44,25 +44,55 @@ namespace ManagementApi.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
-            IRestProvider rest = new RestProvider(ApiKey);
-            try
-            {
-                var results = rest.GetAsync<IEnumerable<BounceDomain>>($"{BASE_URL}/{ServerId}/bounce").Result;
+            string url = $"{BASE_URL}/{ServerId}/bounce";
+            bool hasDomainParameter = !String.IsNullOrEmpty(Domain);
 
-                foreach (var item in results)
-                {
-                    base.WriteObject(item);
-                }
-            }
-            catch (AggregateException ex)
+            if (hasDomainParameter)
             {
-                foreach (var inner in ex.InnerExceptions)
-                {
-                    base.WriteError(new ErrorRecord(inner, String.Empty, ErrorCategory.WriteError, null));
-                }
+                url += $"/{Domain}";
             }
 
-            base.ProcessRecord();
+            if (ShouldProcess(url, "Get-BounceDomain"))
+            {
+                IRestProvider rest = new RestProvider(ApiKey);
+                try
+                {
+                    if (hasDomainParameter)
+                    {
+                        var result = rest.GetAsync<BounceDomain>(url).Result;
+                        base.WriteObject(result);
+                    }
+                    else
+                    {
+                        var results = rest.GetAsync<IEnumerable<BounceDomain>>(url).Result;
+
+                        foreach (var item in results)
+                        {
+                            base.WriteObject(item);
+                        }
+                    }
+                }
+                catch (AggregateException ex)
+                {
+                    foreach (var inner in ex.InnerExceptions)
+                    {
+                        var apiExceptions = inner as ManagementApiException;
+                        if (apiExceptions != null)
+                        {
+                            foreach (var apiEx in apiExceptions.InnerExceptions)
+                            {
+                                base.WriteError(new ErrorRecord(apiEx, String.Empty, ErrorCategory.WriteError, null));
+                            }
+                        }
+                        else
+                        {
+                            base.WriteError(new ErrorRecord(inner, String.Empty, ErrorCategory.WriteError, null));
+                        }
+                    }
+                }
+
+                base.ProcessRecord();
+            }
         }
 
         protected override void StopProcessing()
