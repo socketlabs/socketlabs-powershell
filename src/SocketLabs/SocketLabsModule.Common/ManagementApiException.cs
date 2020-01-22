@@ -9,7 +9,7 @@ namespace SocketLabsModule.Common
 {
     public class ManagementApiException : Exception
     {
-        private readonly IEnumerable<ManagementApiException> _innerExceptions;
+        public IEnumerable<ManagementApiException> InnerExceptions { get; private set; }
 
         public ManagementApiException()
         {
@@ -23,7 +23,7 @@ namespace SocketLabsModule.Common
         public ManagementApiException(string message, IEnumerable<ApiError> errors) 
             : base(message)
         {
-            _innerExceptions = errors?.Select(x => new ManagementApiException($"{x.ErrorType}: {x.Message}"));
+            InnerExceptions = errors?.Select(x => new ManagementApiException($"{x.ErrorType}: {x.Message}"));
         }
 
         public ManagementApiException(string message, Exception innerException) 
