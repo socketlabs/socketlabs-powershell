@@ -13,20 +13,20 @@ namespace ManagementApi.PowerShell.Commands
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
     [Cmdlet(
-        VerbsCommon.Get,
+        VerbsCommon.Remove,
         "BounceDomain",
         SupportsShouldProcess = true,
         DefaultParameterSetName = "Default",
         HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md"
         )]
-    public class GetBounceDomain : ManagementApiCommandBase
+    public class DeleteBounceDomain : ManagementApiCommandBase
     {
+
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public int ServerId { get; set; }
 
-        [Parameter(Mandatory = false, Position = 1, ParameterSetName = "Default")]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "Default")]
         public string Domain { get; set; }
-
 
         protected override void BeginProcessing()
         {
@@ -40,33 +40,21 @@ namespace ManagementApi.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
-            string url = $"{BASE_URL}/{ServerId}/bounce";
-            bool hasDomainParameter = !String.IsNullOrEmpty(Domain);
+            string url = $"{BASE_URL}/{ServerId}/bounce/{Domain}";
 
-            if (hasDomainParameter)
-            {
-                url += $"/{Domain}";
-            }
-
-            if (ShouldProcess(url, "Get-BounceDomain"))
+            if (ShouldProcess(url, "Remove-BounceDomain"))
             {
                 IRestProvider rest = new RestProvider(ApiKey);
                 try
                 {
-                    if (hasDomainParameter)
-                    {
-                        var result = rest.GetAsync<BounceDomain>(url).Result;
-                        base.WriteObject(result);
-                    }
-                    else
-                    {
-                        var results = rest.GetAsync<IEnumerable<BounceDomain>>(url).Result;
+                    var result = rest.DeleteAsync<string>(url).Result;
 
-                        foreach (var item in results)
-                        {
-                            base.WriteObject(item);
-                        }
+                    if (String.IsNullOrEmpty(result))
+                    {
+                        result = $"Domain: {Domain} has been removed.";
                     }
+
+                    base.WriteObject(result);
                 }
                 catch (AggregateException ex)
                 {

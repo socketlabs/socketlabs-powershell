@@ -13,20 +13,23 @@ namespace ManagementApi.PowerShell.Commands
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
     [Cmdlet(
-        VerbsCommon.Get,
+        VerbsData.Update,
         "BounceDomain",
         SupportsShouldProcess = true,
         DefaultParameterSetName = "Default",
         HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md"
         )]
-    public class GetBounceDomain : ManagementApiCommandBase
+    public class UpdateBounceDomain : ManagementApiCommandBase
     {
+
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public int ServerId { get; set; }
 
         [Parameter(Mandatory = false, Position = 1, ParameterSetName = "Default")]
         public string Domain { get; set; }
 
+        [Parameter(Mandatory = false, Position = 2, ParameterSetName = "Default")]
+        public SwitchParameter IsDefault { get; set; }
 
         protected override void BeginProcessing()
         {
@@ -40,33 +43,16 @@ namespace ManagementApi.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
-            string url = $"{BASE_URL}/{ServerId}/bounce";
-            bool hasDomainParameter = !String.IsNullOrEmpty(Domain);
+            string url = $"{BASE_URL}/{ServerId}/bounce/{Domain}";
 
-            if (hasDomainParameter)
-            {
-                url += $"/{Domain}";
-            }
-
-            if (ShouldProcess(url, "Get-BounceDomain"))
+            if (ShouldProcess(url, "Update-BounceDomain"))
             {
                 IRestProvider rest = new RestProvider(ApiKey);
                 try
                 {
-                    if (hasDomainParameter)
-                    {
-                        var result = rest.GetAsync<BounceDomain>(url).Result;
-                        base.WriteObject(result);
-                    }
-                    else
-                    {
-                        var results = rest.GetAsync<IEnumerable<BounceDomain>>(url).Result;
-
-                        foreach (var item in results)
-                        {
-                            base.WriteObject(item);
-                        }
-                    }
+                    var body = new { isDefault = IsDefault.ToBool() };
+                    var result = rest.SendAsync<BounceDomainResult>(url, HttpMethod.Put, body).Result;
+                    base.WriteObject(result);
                 }
                 catch (AggregateException ex)
                 {
@@ -76,6 +62,7 @@ namespace ManagementApi.PowerShell.Commands
                 base.ProcessRecord();
             }
         }
+
 
         protected override void StopProcessing()
         {

@@ -13,20 +13,22 @@ namespace ManagementApi.PowerShell.Commands
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
     [Cmdlet(
-        VerbsCommon.Get,
+        VerbsCommon.New,
         "BounceDomain",
         SupportsShouldProcess = true,
         DefaultParameterSetName = "Default",
         HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md"
         )]
-    public class GetBounceDomain : ManagementApiCommandBase
+    public class NewBounceDomain : ManagementApiCommandBase
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public int ServerId { get; set; }
 
         [Parameter(Mandatory = false, Position = 1, ParameterSetName = "Default")]
-        public string Domain { get; set; }
+        public string[] Domains { get; set; }
 
+        [Parameter(Mandatory = false, Position = 2, ParameterSetName = "Default")]
+        public SwitchParameter IsDefault { get; set; }
 
         protected override void BeginProcessing()
         {
@@ -41,36 +43,29 @@ namespace ManagementApi.PowerShell.Commands
         protected override void ProcessRecord()
         {
             string url = $"{BASE_URL}/{ServerId}/bounce";
-            bool hasDomainParameter = !String.IsNullOrEmpty(Domain);
 
-            if (hasDomainParameter)
+            if (ShouldProcess(url, "New-BounceDomain"))
             {
-                url += $"/{Domain}";
-            }
-
-            if (ShouldProcess(url, "Get-BounceDomain"))
-            {
-                IRestProvider rest = new RestProvider(ApiKey);
-                try
+                for (int i = 0; i < Domains.Length; i++)
                 {
-                    if (hasDomainParameter)
+                    string domain = Domains[i];
+                    var bounceDomain = new BounceDomain()
                     {
-                        var result = rest.GetAsync<BounceDomain>(url).Result;
+                        Domain = domain,
+                        IsDefault = i == 0 && IsDefault.ToBool()
+                    };
+
+                    IRestProvider rest = new RestProvider(ApiKey);
+                    try
+                    {
+                        var result = rest.PostAsync<BounceDomainResult>(url, bounceDomain).Result;
+
                         base.WriteObject(result);
                     }
-                    else
+                    catch (AggregateException ex)
                     {
-                        var results = rest.GetAsync<IEnumerable<BounceDomain>>(url).Result;
-
-                        foreach (var item in results)
-                        {
-                            base.WriteObject(item);
-                        }
+                        HandleException(ex);
                     }
-                }
-                catch (AggregateException ex)
-                {
-                    HandleException(ex);
                 }
 
                 base.ProcessRecord();
