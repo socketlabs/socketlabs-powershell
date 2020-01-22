@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <AssemblyName>SocketLabs.PowerShell.Module</AssemblyName>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AssemblyVersion>1.0.1.3</AssemblyVersion>
@@ -10,7 +10,7 @@
     <Version>1.0.1.3</Version>
     <Authors>Matt Soler</Authors>
     <Company>SocketLabs</Company>
-    <Copyright>©2019 SocketLabs Acquisition, LLC</Copyright>
+    <Copyright>©2020 SocketLabs Acquisition, LLC</Copyright>
     <PackageLicenseUrl>https://github.com/socketlabs/socketlabs-powershell/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/socketlabs/socketlabs-powershell</PackageProjectUrl>
     <RepositoryUrl>https://github.com/socketlabs/socketlabs-powershell</RepositoryUrl>
