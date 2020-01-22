@@ -59,6 +59,13 @@ namespace SocketLabsModule.Common.Services
             }
         }
 
+        public async Task<T> DeleteAsync<T>(string url) where T : class
+        {
+            var request = new HttpRequestMessage(HttpMethod.Delete, url);
+            request.Headers.Add("Authorization", $"Bearer {_bearerToken}");
+            return await GetResponseAsync<T>(request);
+        }
+
         public async Task<T> GetAsync<T>(string url) where T : class
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url);
