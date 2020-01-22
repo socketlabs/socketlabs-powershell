@@ -1,6 +1,7 @@
 ﻿using InjectionApi.Utilities;
 using SocketLabs.InjectionApi;
 using SocketLabs.InjectionApi.Message;
+using SocketLabsModule.Common;
 using System;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
@@ -11,7 +12,7 @@ namespace InjectionApi.PowerShell.Commands
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
     [Cmdlet(VerbsData.Out, "SocketLabs", SupportsShouldProcess = true, DefaultParameterSetName = "Default", HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md")]
-    public class OutSocketLabsCommand : SocketLabsCommandBase, IDisposable
+    public class OutSocketLabsCommand : PipelineCommandBase, IDisposable
     {
         /// <summary>
         /// The sender email addresses to send the command output from.
