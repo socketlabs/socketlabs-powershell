@@ -1,11 +1,9 @@
 ﻿using ManagementApi.Models;
-using SocketLabsModule.Common;
 using SocketLabsModule.Common.Services;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using System.Net.Http;
-using System.Text;
+using static SocketLabsModule.Common.UrlHelper;
 
 namespace ManagementApi.PowerShell.Commands
 {
@@ -13,22 +11,22 @@ namespace ManagementApi.PowerShell.Commands
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
     [Cmdlet(
-        VerbsCommon.New,
-        "BounceDomain",
+        VerbsCommon.Get,
+        "DkimEntries",
         SupportsShouldProcess = true,
         DefaultParameterSetName = "Default",
         HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md"
         )]
-    public class NewBounceDomain : ManagementApiCommandBase
+    public class GetDkimEntries : ManagementApiCommandBase
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public int ServerId { get; set; }
 
         [Parameter(Mandatory = false, Position = 1, ParameterSetName = "Default")]
-        public string[] Domains { get; set; }
+        public string Domain { get; set; }
 
         [Parameter(Mandatory = false, Position = 2, ParameterSetName = "Default")]
-        public SwitchParameter IsDefault { get; set; }
+        public string Selector { get; set; }
 
         protected override void BeginProcessing()
         {
@@ -42,30 +40,30 @@ namespace ManagementApi.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
-            string url = $"{BASE_URL}/{ServerId}/bounce";
-
-            if (ShouldProcess(url, "New-BounceDomain"))
+            string url = $"{BASE_URL}/{ServerId}/dkim";
+            var qsp = new Dictionary<string, string>()
             {
-                for (int i = 0; i < Domains.Length; i++)
+                { "Domain", Domain },
+                { "Selector", Selector }
+            };
+            url = AddQueryStrings(url, qsp);
+
+            if (ShouldProcess(url, "Get-DkimEntries"))
+            {
+                IRestProvider rest = new RestProvider(ApiKey);
+                try
                 {
-                    string domain = Domains[i];
-                    var bounceDomain = new BounceDomain()
-                    {
-                        Domain = domain,
-                        IsDefault = i == 0 && IsDefault.ToBool()
-                    };
 
-                    IRestProvider rest = new RestProvider(ApiKey);
-                    try
+                    var result = rest.GetAsync<IEnumerable<DkimKeyResult>>(url).Result;
+                    foreach (var item in result)
                     {
-                        var result = rest.PostAsync<BounceDomainResult>(url, bounceDomain).Result;
-
-                        base.WriteObject(result);
+                        item.ServerId = ServerId;
+                        base.WriteObject(item);
                     }
-                    catch (AggregateException ex)
-                    {
-                        HandleException(ex);
-                    }
+                }
+                catch (AggregateException ex)
+                {
+                    HandleException(ex);
                 }
 
                 base.ProcessRecord();

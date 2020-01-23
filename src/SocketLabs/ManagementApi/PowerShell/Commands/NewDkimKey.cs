@@ -1,11 +1,8 @@
 ﻿using ManagementApi.Models;
-using SocketLabsModule.Common;
 using SocketLabsModule.Common.Services;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using System.Net.Http;
-using System.Text;
 
 namespace ManagementApi.PowerShell.Commands
 {
@@ -13,23 +10,22 @@ namespace ManagementApi.PowerShell.Commands
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
     [Cmdlet(
-        VerbsData.Update,
-        "BounceDomain",
+        VerbsCommon.New,
+        "DkimKey",
         SupportsShouldProcess = true,
         DefaultParameterSetName = "Default",
         HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md"
         )]
-    public class UpdateBounceDomain : ManagementApiCommandBase
+    public class NewDkimKey : ManagementApiCommandBase
     {
-
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public int ServerId { get; set; }
 
-        [Parameter(Mandatory = false, Position = 1, ParameterSetName = "Default")]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "Default")]
         public string Domain { get; set; }
 
-        [Parameter(Mandatory = false, Position = 2, ParameterSetName = "Default")]
-        public SwitchParameter IsDefault { get; set; }
+        [Parameter(Mandatory = true, Position = 2, ParameterSetName = "Default")]
+        public string Selector { get; set; }
 
         protected override void BeginProcessing()
         {
@@ -43,15 +39,17 @@ namespace ManagementApi.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
-            string url = $"{BASE_URL}/{ServerId}/bounce/{Domain}";
+            string url = $"{BASE_URL}/{ServerId}/dkim/generate?domain={Domain}&selector={Selector}";
 
-            if (ShouldProcess(url, "Update-BounceDomain"))
+
+            if (ShouldProcess(url, "New-DkimKey"))
             {
                 IRestProvider rest = new RestProvider(ApiKey);
                 try
                 {
-                    var body = new { isDefault = IsDefault.ToBool() };
-                    var result = rest.SendAsync<BounceDomainResult>(url, HttpMethod.Put, body).Result;
+
+                    var result = rest.GetAsync<DkimKeyGeneratedResult>(url).Result;
+                    result.ServerId = ServerId;
                     base.WriteObject(result);
                 }
                 catch (AggregateException ex)
@@ -62,7 +60,6 @@ namespace ManagementApi.PowerShell.Commands
                 base.ProcessRecord();
             }
         }
-
 
         protected override void StopProcessing()
         {

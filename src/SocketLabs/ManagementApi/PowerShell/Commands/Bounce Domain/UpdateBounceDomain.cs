@@ -13,20 +13,23 @@ namespace ManagementApi.PowerShell.Commands
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
     [Cmdlet(
-        VerbsCommon.Remove,
+        VerbsData.Update,
         "BounceDomain",
         SupportsShouldProcess = true,
         DefaultParameterSetName = "Default",
         HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md"
         )]
-    public class DeleteBounceDomain : ManagementApiCommandBase
+    public class UpdateBounceDomain : ManagementApiCommandBase
     {
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public int ServerId { get; set; }
 
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = "Default")]
+        [Parameter(Mandatory = false, Position = 1, ParameterSetName = "Default")]
         public string Domain { get; set; }
+
+        [Parameter(Mandatory = false, Position = 2, ParameterSetName = "Default")]
+        public SwitchParameter IsDefault { get; set; }
 
         protected override void BeginProcessing()
         {
@@ -42,18 +45,14 @@ namespace ManagementApi.PowerShell.Commands
         {
             string url = $"{BASE_URL}/{ServerId}/bounce/{Domain}";
 
-            if (ShouldProcess(url, "Remove-BounceDomain"))
+            if (ShouldProcess(url, "Update-BounceDomain"))
             {
                 IRestProvider rest = new RestProvider(ApiKey);
                 try
                 {
-                    var result = rest.DeleteAsync<string>(url).Result;
-
-                    if (String.IsNullOrEmpty(result))
-                    {
-                        result = $"Domain: {Domain} has been removed.";
-                    }
-
+                    var body = new { isDefault = IsDefault.ToBool() };
+                    var result = rest.SendAsync<BounceDomainResult>(url, HttpMethod.Put, body).Result;
+                    result.ServerId = ServerId;
                     base.WriteObject(result);
                 }
                 catch (AggregateException ex)
@@ -64,6 +63,7 @@ namespace ManagementApi.PowerShell.Commands
                 base.ProcessRecord();
             }
         }
+
 
         protected override void StopProcessing()
         {

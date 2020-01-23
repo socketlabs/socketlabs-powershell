@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace ManagementApi.Models
 {
-    public class BounceDomain
+    public class DkimKeyResult
     {
         public int ServerId { get; set; }
         public string Domain { get; set; }
-        public bool IsDefault { get; set; }
+        public string Selector { get; set; }
+        public string TruncatedPrivateKey { get; set; }
+        public string ValidationStatus { get; set; }
     }
-
 }
