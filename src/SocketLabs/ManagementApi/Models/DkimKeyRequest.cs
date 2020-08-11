@@ -6,20 +6,19 @@ using System.Threading.Tasks;
 
 namespace ManagementApi.Models
 {
-    public class DkimKeyGeneratedResult
+    public class DkimKeyRequest
     {
-        public int ServerId { get; set; }
-        public string DnsHostName { get; set; }
         public string Domain { get; set; }
         public string Selector { get; set; }
-        public string DnsRecord { get; set; }
-        public string PublicKey { get; set; }
         public string PrivateKey { get; set; }
 
+        public DkimKeyRequest() { }
 
-        public string SplitDnsRecord()
+        public DkimKeyRequest(DkimKeyGeneratedResult dkim)
         {
-            return DnsRecord.Insert(254, "\" \"");
+            Domain = dkim.Domain;
+            Selector = dkim.Selector;
+            PrivateKey = dkim.PrivateKey;
         }
     }
 }
