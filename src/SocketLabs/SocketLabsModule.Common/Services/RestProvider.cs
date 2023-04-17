@@ -1,33 +1,24 @@
-﻿using Microsoft.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using SocketLabsModule.Common.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.IO;
+using SocketLabsModule.Common.Models;
 
 namespace SocketLabsModule.Common.Services
 {
     public class RestProvider : IDisposable, IRestProvider
     {
-        private static DefaultContractResolver _resolver = new DefaultContractResolver()
-        {
-            NamingStrategy = new CamelCaseNamingStrategy()
-        };
-        private readonly string _bearerToken;
         private readonly HttpClient _httpClient;
         private readonly RecyclableMemoryStreamManager _streamManager;
-        private readonly JsonSerializer _serializer;
 
         public RestProvider(string bearerToken)
         {
-            _bearerToken = bearerToken;
             _httpClient = new HttpClient();
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
             _streamManager = new RecyclableMemoryStreamManager();
-            _serializer = new JsonSerializer() { ContractResolver = _resolver };
         }
 
         public Task<string> PostAsync(string url, object item) =>
@@ -38,18 +29,10 @@ namespace SocketLabsModule.Common.Services
 
         public async Task<T> SendAsync<T>(string url, HttpMethod httpMethod, object item) where T : class
         {
-            //_logger.LogInformation($"Posting to REST endpoint: {url}");
-
-            string reqJson = JsonConvert.SerializeObject(item);
             var request = new HttpRequestMessage(httpMethod, url);
-            request.Headers.Add("Authorization", $"Bearer {_bearerToken}");
-            
             using (var ms = _streamManager.GetStream())
-            using (var sw = new StreamWriter(ms))
-            using (JsonWriter writer = new JsonTextWriter(sw))
             {
-                _serializer.Serialize(writer, item);
-                await writer.FlushAsync();
+                await JsonSerializer.SerializeAsync(ms, item);
                 ms.Position = 0;
                 var content = new StreamContent(ms);
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -62,23 +45,18 @@ namespace SocketLabsModule.Common.Services
         public async Task<T> DeleteAsync<T>(string url) where T : class
         {
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
-            request.Headers.Add("Authorization", $"Bearer {_bearerToken}");
             return await GetResponseAsync<T>(request);
         }
 
         public async Task<T> GetAsync<T>(string url) where T : class
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url);
-            request.Headers.Add("Authorization", $"Bearer {_bearerToken}");
             return await GetResponseAsync<T>(request);
         }
 
         private async Task<T> GetResponseAsync<T>(HttpRequestMessage request) where T : class
         {
             var httpResponse = await _httpClient.SendAsync(request);
-
-            //_logger.LogInformation($"Status Code: {httpResponse.StatusCode} Reason: {httpResponse.ReasonPhrase}");
-
             if (httpResponse.IsSuccessStatusCode)
             {
                 T response = null;
@@ -103,10 +81,8 @@ namespace SocketLabsModule.Common.Services
         private async Task<T> DeserializeAsync<T>(HttpResponseMessage httpResponse) where T : class
         {
             using (var responseContent = await httpResponse.Content.ReadAsStreamAsync())
-            using (var sr = new StreamReader(responseContent))
-            using (JsonReader reader = new JsonTextReader(sr))
             {
-                return _serializer.Deserialize<T>(reader);
+                return JsonSerializer.Deserialize<T>(responseContent);
             }
         }
 
