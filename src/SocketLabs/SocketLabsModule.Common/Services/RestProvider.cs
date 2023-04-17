@@ -43,7 +43,7 @@ namespace SocketLabsModule.Common.Services
             string reqJson = JsonConvert.SerializeObject(item);
             var request = new HttpRequestMessage(httpMethod, url);
             request.Headers.Add("Authorization", $"Bearer {_bearerToken}");
-
+            
             using (var ms = _streamManager.GetStream())
             using (var sw = new StreamWriter(ms))
             using (JsonWriter writer = new JsonTextWriter(sw))
@@ -130,6 +130,11 @@ namespace SocketLabsModule.Common.Services
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
+        }
+
+        public async Task<T> PutAsync<T>(string url, object item) where T : class
+        {
+            return await SendAsync<T>(url, HttpMethod.Put, item);
         }
 
         #endregion IDisposable Support

@@ -11,5 +11,6 @@ namespace SocketLabsModule.Common.Services
         Task<string> PostAsync(string url, object item);
         Task<T> PostAsync<T>(string url, object item) where T : class;
         Task<T> SendAsync<T>(string url, HttpMethod httpMethod, object item) where T : class;
+        Task<T> PutAsync<T>(string url, object item) where T : class;
     }
 }

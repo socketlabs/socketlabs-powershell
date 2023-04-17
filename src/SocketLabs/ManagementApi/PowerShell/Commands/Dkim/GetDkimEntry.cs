@@ -12,12 +12,12 @@ namespace ManagementApi.PowerShell.Commands
     /// </summary>
     [Cmdlet(
         VerbsCommon.Get,
-        "DkimEntries",
+        "DkimEntry",
         SupportsShouldProcess = true,
         DefaultParameterSetName = "Default",
         HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md"
         )]
-    public class GetDkimEntries : ManagementApiCommandBase
+    public class GetDkimEntry : ManagementApiCommandBase
     {
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = "Default")]
         public int ServerId { get; set; }
@@ -43,8 +43,8 @@ namespace ManagementApi.PowerShell.Commands
             string url = $"{BASE_URL}/{ServerId}/dkim";
             var qsp = new Dictionary<string, string>()
             {
-                { "Domain", Domain },
-                { "Selector", Selector }
+                { "domain", Domain },
+                { "selector", Selector }
             };
             url = AddQueryStrings(url, qsp);
 
