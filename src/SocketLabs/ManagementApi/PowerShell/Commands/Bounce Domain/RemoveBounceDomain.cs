@@ -10,7 +10,7 @@ using System.Text;
 namespace ManagementApi.PowerShell.Commands
 {
     /// <summary>
-    /// Implementation for the Out-SocketLabs command.
+    /// Implementation for the Remove-BounceDomain command.
     /// </summary>
     [Cmdlet(
         VerbsCommon.Remove,
