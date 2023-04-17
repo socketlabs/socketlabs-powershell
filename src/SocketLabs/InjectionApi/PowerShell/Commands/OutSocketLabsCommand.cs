@@ -1,10 +1,10 @@
-﻿using InjectionApi.Utilities;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Management.Automation;
+using InjectionApi.Utilities;
 using SocketLabs.InjectionApi;
 using SocketLabs.InjectionApi.Message;
 using SocketLabsModule.Common;
-using System;
-using System.Collections.ObjectModel;
-using System.Management.Automation;
 
 namespace InjectionApi.PowerShell.Commands
 {
@@ -40,6 +40,13 @@ namespace InjectionApi.PowerShell.Commands
         [Parameter(Position = 5, ParameterSetName = "Default")]
         public SwitchParameter PassThru { get; set; }
 
+        [Parameter(Position = 6, ParameterSetName = "Default")]
+        public SwitchParameter UseCXEndpoint { get; set; }
+
+        [Parameter(Position = 7, ParameterSetName = "Default")]
+        public string ApiEndpoint { get; set; }
+
+
         private readonly Collection<PSObject> _psObjects;
         private string _body;
         private ISocketLabsClient _socketLabsClient;
@@ -71,6 +78,11 @@ namespace InjectionApi.PowerShell.Commands
                 {
                     throw new PSArgumentException("Invalid value for ServerId", nameof(this.ServerId));
                 }
+            }
+
+            if (UseCXEndpoint.IsPresent)
+            {
+                ApiEndpoint = "https://inject-cx.socketlabs.com/api/v1/email";
             }
 
             base.BeginProcessing();
@@ -121,6 +133,18 @@ namespace InjectionApi.PowerShell.Commands
             if (_socketLabsClient == null)
             {
                 _socketLabsClient = new SocketLabsClient(this.ServerId, this.InjectionApiKey);
+            }
+
+            if (!string.IsNullOrEmpty(ApiEndpoint))
+            {
+                if (Uri.TryCreate(ApiEndpoint, UriKind.Absolute, out var uri))
+                {
+                    (_socketLabsClient as SocketLabsClient).EndpointUrl = uri.ToString();
+                }
+                else
+                {
+                    throw new PSArgumentException($"Unable to parse ApiEndpoint {ApiEndpoint}");
+                }
             }
 
             var message = new BasicMessage
