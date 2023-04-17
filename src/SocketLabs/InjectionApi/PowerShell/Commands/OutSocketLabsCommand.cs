@@ -123,10 +123,13 @@ namespace InjectionApi.PowerShell.Commands
                 _socketLabsClient = new SocketLabsClient(this.ServerId, this.InjectionApiKey);
             }
 
-            var message = new BasicMessage();
-            message.Subject = this.Subject;
-            message.HtmlBody = html;
-            message.PlainTextBody = _body;
+            var message = new BasicMessage
+            {
+                Subject = this.Subject,
+                HtmlBody = html,
+                PlainTextBody = _body
+            };
+
             message.From.Email = this.Sender;
 
             foreach (var recipient in this.Recipients)
