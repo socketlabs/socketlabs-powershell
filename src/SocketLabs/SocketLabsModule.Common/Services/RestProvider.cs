@@ -13,12 +13,14 @@ namespace SocketLabsModule.Common.Services
     {
         private readonly HttpClient _httpClient;
         private readonly RecyclableMemoryStreamManager _streamManager;
+        private readonly JsonSerializerOptions _serializerOptions;
 
         public RestProvider(string bearerToken)
         {
             _httpClient = new HttpClient();
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
             _streamManager = new RecyclableMemoryStreamManager();
+            _serializerOptions = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
         }
 
         public Task<string> PostAsync(string url, object item) =>
@@ -67,6 +69,7 @@ namespace SocketLabsModule.Common.Services
                 }
                 else
                 {
+                    var foo = httpResponse.Content.ReadAsStringAsync();
                     response = await DeserializeAsync<T>(httpResponse);
                 }
                 return response;
@@ -82,7 +85,7 @@ namespace SocketLabsModule.Common.Services
         {
             using (var responseContent = await httpResponse.Content.ReadAsStreamAsync())
             {
-                return JsonSerializer.Deserialize<T>(responseContent);
+                return JsonSerializer.Deserialize<T>(responseContent, _serializerOptions);
             }
         }
 
