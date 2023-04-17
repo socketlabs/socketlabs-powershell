@@ -12,7 +12,7 @@ namespace ManagementApi.PowerShell.Commands
     {
         protected const string BASE_URL = "https://api.socketlabs.com/v1/servers";
 
-        [Parameter(Mandatory = false, Position = 10, ParameterSetName = "Default")]
+        [Parameter(Mandatory = false, Position = 10)]
         public string ApiKey { get; set; }
 
         protected override void BeginProcessing()
