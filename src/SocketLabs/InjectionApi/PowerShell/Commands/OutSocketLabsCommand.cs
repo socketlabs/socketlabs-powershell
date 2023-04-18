@@ -11,7 +11,7 @@ namespace InjectionApi.PowerShell.Commands
     /// <summary>
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
-    [Cmdlet(VerbsData.Out, "SocketLabs", SupportsShouldProcess = true, DefaultParameterSetName = "Default", HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md")]
+    [Cmdlet(VerbsData.Out, "SocketLabs", SupportsShouldProcess = true, DefaultParameterSetName = "Default", HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/main/README.md")]
     public class OutSocketLabsCommand : PipelineCommandBase, IDisposable
     {
         /// <summary>
@@ -46,6 +46,8 @@ namespace InjectionApi.PowerShell.Commands
         [Parameter(Position = 7, ParameterSetName = "Default")]
         public string ApiEndpoint { get; set; }
 
+        [Parameter(Position = 8, ParameterSetName = "Default")]
+        public SwitchParameter Unformatted { get; set; }
 
         private readonly Collection<PSObject> _psObjects;
         private string _body;
@@ -128,7 +130,7 @@ namespace InjectionApi.PowerShell.Commands
 
         public SendResponse InjectMessage()
         {
-            var html = MessageTemplate.BuildHtmlMessage(_body);
+            var html = MessageTemplate.BuildHtmlMessage(_body, Unformatted.IsPresent);
 
             if (_socketLabsClient == null)
             {
