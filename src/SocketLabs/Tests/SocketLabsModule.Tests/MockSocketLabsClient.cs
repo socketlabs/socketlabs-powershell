@@ -3,6 +3,7 @@ using SocketLabs.InjectionApi.Message;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SocketLabsModule.Tests
@@ -25,6 +26,16 @@ namespace SocketLabsModule.Tests
         }
 
         public Task<SendResponse> SendAsync(IBulkMessage message)
+        {
+            return Task.Run(() => new SendResponse() { Result = SendResult.Success });
+        }
+
+        public Task<SendResponse> SendAsync(IBasicMessage message, CancellationToken cancellationToken)
+        {
+            return Task.Run(() => new SendResponse() { Result = SendResult.Success });
+        }
+
+        public Task<SendResponse> SendAsync(IBulkMessage message, CancellationToken cancellationToken)
         {
             return Task.Run(() => new SendResponse() { Result = SendResult.Success });
         }

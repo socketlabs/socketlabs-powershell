@@ -1,17 +1,18 @@
-﻿using InjectionApi.Utilities;
-using SocketLabs.InjectionApi;
-using SocketLabs.InjectionApi.Message;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
+using InjectionApi.Utilities;
+using SocketLabs.InjectionApi;
+using SocketLabs.InjectionApi.Message;
+using SocketLabsModule.Common;
 
 namespace InjectionApi.PowerShell.Commands
 {
     /// <summary>
     /// Implementation for the Out-SocketLabs command.
     /// </summary>
-    [Cmdlet(VerbsData.Out, "SocketLabs", SupportsShouldProcess = true, DefaultParameterSetName = "Default", HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md")]
-    public class OutSocketLabsCommand : SocketLabsCommandBase, IDisposable
+    [Cmdlet(VerbsData.Out, "SocketLabs", SupportsShouldProcess = true, DefaultParameterSetName = "Default", HelpUri = "https://github.com/socketlabs/socketlabs-powershell/blob/main/README.md")]
+    public class OutSocketLabsCommand : PipelineCommandBase, IDisposable
     {
         /// <summary>
         /// The sender email addresses to send the command output from.
@@ -38,6 +39,15 @@ namespace InjectionApi.PowerShell.Commands
 
         [Parameter(Position = 5, ParameterSetName = "Default")]
         public SwitchParameter PassThru { get; set; }
+
+        [Parameter(Position = 6, ParameterSetName = "Default")]
+        public SwitchParameter UseCXEndpoint { get; set; }
+
+        [Parameter(Position = 7, ParameterSetName = "Default")]
+        public string ApiEndpoint { get; set; }
+
+        [Parameter(Position = 8, ParameterSetName = "Default")]
+        public SwitchParameter Unformatted { get; set; }
 
         private readonly Collection<PSObject> _psObjects;
         private string _body;
@@ -70,6 +80,11 @@ namespace InjectionApi.PowerShell.Commands
                 {
                     throw new PSArgumentException("Invalid value for ServerId", nameof(this.ServerId));
                 }
+            }
+
+            if (UseCXEndpoint.IsPresent)
+            {
+                ApiEndpoint = "https://inject-cx.socketlabs.com/api/v1/email";
             }
 
             base.BeginProcessing();
@@ -115,17 +130,32 @@ namespace InjectionApi.PowerShell.Commands
 
         public SendResponse InjectMessage()
         {
-            var html = MessageTemplate.BuildHtmlMessage(_body);
+            var html = MessageTemplate.BuildHtmlMessage(_body, Unformatted.IsPresent);
 
             if (_socketLabsClient == null)
             {
                 _socketLabsClient = new SocketLabsClient(this.ServerId, this.InjectionApiKey);
             }
 
-            var message = new BasicMessage();
-            message.Subject = this.Subject;
-            message.HtmlBody = html;
-            message.PlainTextBody = _body;
+            if (!string.IsNullOrEmpty(ApiEndpoint))
+            {
+                if (Uri.TryCreate(ApiEndpoint, UriKind.Absolute, out var uri))
+                {
+                    (_socketLabsClient as SocketLabsClient).EndpointUrl = uri.ToString();
+                }
+                else
+                {
+                    throw new PSArgumentException($"Unable to parse ApiEndpoint {ApiEndpoint}");
+                }
+            }
+
+            var message = new BasicMessage
+            {
+                Subject = this.Subject,
+                HtmlBody = html,
+                PlainTextBody = _body
+            };
+
             message.From.Email = this.Sender;
 
             foreach (var recipient in this.Recipients)

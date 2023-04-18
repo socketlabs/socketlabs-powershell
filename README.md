@@ -1,9 +1,11 @@
 # socketlabs-powershell
-### [![SocketLabs](https://www.socketlabs.com/assets/logo-dark-sm.png)](https://www.socketlabs.com) 
-[![Twitter Follow](https://img.shields.io/twitter/follow/socketlabs.svg?style=social&label=Follow)](https://twitter.com/socketlabs) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/socketlabs/socketlabs-csharp/blob/master/CONTRIBUTING.md)
-<!--
-[![GitHub contributors](https://img.shields.io/github/contributors/socketlabs/csharp-socketlabs.svg)](https://github.com/socketlabs/csharp-socketlabs/graphs/contributors)
--->
+[![SocketLabs](https://s3.amazonaws.com/static.socketlabs/logos/logo-dark-317x40.svg)](https://www.socketlabs.com/developers)  
+[![Twitter Follow](https://img.shields.io/twitter/follow/socketlabs.svg?style=social&label=Follow)](https://twitter.com/socketlabs) 
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md) 
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/socketlabs/socketlabs-powershell/blob/master/CONTRIBUTING.md)
+[![GitHub contributors](https://img.shields.io/github/contributors/socketlabs/socketlabs-powershell.svg)](https://github.com/socketlabs/socketlabs-powershell/graphs/contributors)
+![](https://dev.azure.com/socketlabs/Public%20Projects/_apis/build/status/PowerShell-CI?branchName=main)
+
 
 The SocketLabs PowerShell module allows you to interact with our platform API using PowerShell.  
 
@@ -100,4 +102,4 @@ PS C:\> $request.Content | ConvertFrom-Json | Format-Table ip, country*, hostnam
 
 # License
 The SocketLabs PowerShell module and all associated code, including any code 
-samples, are [MIT Licensed](https://github.com/socketlabs/socketlabs-csharp/blob/master/LICENSE.MD).
+samples, are [MIT Licensed](https://github.com/socketlabs/socketlabs-powershell/blob/master/LICENSE.MD).
