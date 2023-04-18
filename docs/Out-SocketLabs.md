@@ -1,7 +1,7 @@
 ---
 external help file: SocketLabs.PowerShell.InjectionApi.dll-Help.xml
 Module Name: SocketLabs
-online version: https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md
+online version: https://github.com/socketlabs/socketlabs-powershell/blob/main/README.md
 schema: 2.0.0
 ---
 
@@ -14,7 +14,8 @@ The SocketLabs Out-SocketLabs cmdlet lets you send messages through our platform
 
 ```
 Out-SocketLabs [-Sender] <String> [-Recipients] <String[]> [-Subject] <String> [[-InjectionApiKey] <String>]
- [[-ServerId] <Int32>] [-PassThru] [-InputObject <PSObject>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-ServerId] <Int32>] [-PassThru] [-UseCXEndpoint] [-ApiEndpoint <String>] [-Unformatted]
+ [-InputObject <PSObject>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,6 +36,13 @@ PS C:\> Get-Process | Out-SocketLabs -Sender "sysadm@example.com" -Recipients "i
 ```
 
 Output a list of processess to multiple email recipient.
+
+### Example 3
+```powershell
+PS C:\> '<h1 style="background-color: #FFCDD2;">New Alert</h1><p>Something bad happened</p>' | Out-SocketLabs -Sender "no-reply@example.com" -Recipients "angie@example.com" -Subject "Houston, we have a problem" -Unformatted
+```
+
+Send HTML content without using the default powershell formatting.
 
 ## PARAMETERS
 
@@ -174,23 +182,66 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ApiEndpoint
+Specify an alternative API Endpoint.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Unformatted
+Do not apply the default PowerShell formatting and colors.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UseCXEndpoint
+Use the complex sender endpoint.  Setting this flag ignores any values used in the `-ApiEndpoint` parameter.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ### System.Management.Automation.PSObject
-
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS
 
-[https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md](https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md) 
+[https://github.com/socketlabs/socketlabs-powershell/blob/main/README.md](https://github.com/socketlabs/socketlabs-powershell/blob/main/README.md) 
 
-[Obtaining your API Key and SocketLabs ServerId number](https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md#obtaining-your-api-key-and-socketlabs-serverid-number) 
+[Obtaining your API Key and SocketLabs ServerId number](https://github.com/socketlabs/socketlabs-powershell/blob/main/README.md#obtaining-your-api-key-and-socketlabs-serverid-number) 
 
 [Developer Documentation](https://www.socketlabs.com/developers)

@@ -17,9 +17,9 @@
         <maml:name>Out-SocketLabs</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="From">
           <maml:name>Sender</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The from address of the email message</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -29,9 +29,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="To">
           <maml:name>Recipients</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>A list of email addresses to send the message to</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
             <maml:name>String[]</maml:name>
@@ -41,9 +41,9 @@
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Subject</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The subject of your message</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -53,9 +53,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>InjectionApiKey</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Your API Key for your SocketLabs server</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -65,9 +65,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>ServerId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The ServerId value for your SocketLabs server.</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -77,9 +77,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>PassThru</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Pass the object through the pipeline</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -88,9 +88,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
           <maml:name>Confirm</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -99,9 +99,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>InputObject</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The object to pass in for sending through the InjectionApi</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
           <dev:type>
             <maml:name>PSObject</maml:name>
@@ -111,9 +111,43 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
           <maml:name>WhatIf</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-          </maml:Description>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ApiEndpoint</maml:name>
+          <maml:description>
+            <maml:para>Specify an alternative API Endpoint.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Unformatted</maml:name>
+          <maml:description>
+            <maml:para>Do not apply the default PowerShell formatting and colors.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>UseCXEndpoint</maml:name>
+          <maml:description>
+            <maml:para>Use the complex sender endpoint.  Setting this flag ignores any values used in the `-ApiEndpoint` parameter.</maml:para>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -125,9 +159,9 @@
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
         <maml:name>Confirm</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -137,9 +171,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>InjectionApiKey</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Your API Key for your SocketLabs server</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -149,9 +183,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>InputObject</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The object to pass in for sending through the InjectionApi</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">PSObject</command:parameterValue>
         <dev:type>
           <maml:name>PSObject</maml:name>
@@ -161,9 +195,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>PassThru</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Pass the object through the pipeline</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -173,9 +207,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="To">
         <maml:name>Recipients</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>A list of email addresses to send the message to</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
           <maml:name>String[]</maml:name>
@@ -185,9 +219,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="From">
         <maml:name>Sender</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The from address of the email message</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -197,9 +231,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>ServerId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The ServerId value for your SocketLabs server.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -209,9 +243,9 @@
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Subject</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The subject of your message</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -221,9 +255,45 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
         <maml:name>WhatIf</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
-        </maml:Description>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ApiEndpoint</maml:name>
+        <maml:description>
+          <maml:para>Specify an alternative API Endpoint.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Unformatted</maml:name>
+        <maml:description>
+          <maml:para>Do not apply the default PowerShell formatting and colors.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>UseCXEndpoint</maml:name>
+        <maml:description>
+          <maml:para>Use the complex sender endpoint.  Setting this flag ignores any values used in the `-ApiEndpoint` parameter.</maml:para>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -272,15 +342,22 @@
           <maml:para>Output a list of processess to multiple email recipient.</maml:para>
         </dev:remarks>
       </command:example>
+      <command:example>
+        <maml:title>-------------------------- Example 3 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; '&lt;h1 style="background-color: #FFCDD2;"&gt;New Alert&lt;/h1&gt;&lt;p&gt;Something bad happened&lt;/p&gt;' | Out-SocketLabs -Sender "no-reply@example.com" -Recipients "angie@example.com" -Subject "Houston, we have a problem" -Unformatted</dev:code>
+        <dev:remarks>
+          <maml:para>Send HTML content without using the default powershell formatting.</maml:para>
+        </dev:remarks>
+      </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md</maml:linkText>
-        <maml:uri>https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md</maml:uri>
+        <maml:linkText>https://github.com/socketlabs/socketlabs-powershell/blob/main/README.md</maml:linkText>
+        <maml:uri>https://github.com/socketlabs/socketlabs-powershell/blob/main/README.md</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Obtaining your API Key and SocketLabs ServerId number</maml:linkText>
-        <maml:uri>https://github.com/socketlabs/socketlabs-powershell/blob/master/README.md#obtaining-your-api-key-and-socketlabs-serverid-number</maml:uri>
+        <maml:uri>https://github.com/socketlabs/socketlabs-powershell/blob/main/README.md#obtaining-your-api-key-and-socketlabs-serverid-number</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Developer Documentation</maml:linkText>
