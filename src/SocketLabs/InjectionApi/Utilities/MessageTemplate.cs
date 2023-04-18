@@ -10,7 +10,7 @@
 
             if (unformatted)
             {
-                innerHtml = $"<p>{body}</p>";
+                innerHtml = body;
             }
             else
             {
