@@ -3,6 +3,17 @@
   <PropertyGroup>
     <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
     <AssemblyName>SocketLabs.PowerShell.ManagementApi</AssemblyName>
+	<AssemblyVersion>1.4.2.0</AssemblyVersion>
+	<FileVersion>1.4.2.0</FileVersion>
+	<Description>The SocketLabs PowerShell module lets you interact with our APIs.</Description>
+	<Version>1.4.2.0</Version>
+	<Authors>Matt Soler</Authors>
+	<Company>SocketLabs</Company>
+	<Copyright>©2023 SocketLabs Acquisition, LLC</Copyright>
+	<PackageLicenseUrl>https://github.com/socketlabs/socketlabs-powershell/blob/master/LICENSE</PackageLicenseUrl>
+	<PackageProjectUrl>https://github.com/socketlabs/socketlabs-powershell</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/socketlabs/socketlabs-powershell</RepositoryUrl>
+	<PackageTags>socketlabs, injection, api, powershell, module</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
